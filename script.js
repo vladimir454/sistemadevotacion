@@ -246,15 +246,55 @@ document.addEventListener('DOMContentLoaded', () => {
     if (currentPage === 'results.html') {
         const resultsDisplay = document.getElementById('resultsDisplay');
         if (resultsDisplay) {
-            let resultsHtml = '<h4>Conteo de Votos:</h4><ul>';
             let totalVotes = 0;
-
+            // Calculate total votes first to determine percentages
             candidates.forEach(candidate => {
-                const count = votes[candidate.id] || 0;
-                resultsHtml += `<li>${candidate.name}: ${count} votos</li>`;
-                totalVotes += count;
+                totalVotes += (votes[candidate.id] || 0);
             });
-            resultsHtml += `</ul><p><strong>Total de Votos Emitidos: ${totalVotes}</strong></p>`;
+
+            let resultsHtml = `<h4 class="mb-4 text-center">Conteo de Votos:</h4>`;
+
+            if (totalVotes === 0) {
+                resultsHtml += `<div class="alert alert-info text-center" role="alert">
+                                    Aún no se han registrado votos.
+                                </div>`;
+            } else {
+                candidates.forEach(candidate => {
+                    const count = votes[candidate.id] || 0;
+                    const percentage = totalVotes > 0 ? ((count / totalVotes) * 100).toFixed(2) : 0;
+                    let progressBarColor = 'bg-primary'; // Default color
+
+                    // Assign different colors based on candidate position or just cycle them
+                    // This is a simple example, you could map specific colors to specific candidates
+                    if (candidate.id === 'candidateA') progressBarColor = 'bg-success';
+                    else if (candidate.id === 'candidateB') progressBarColor = 'bg-info';
+                    else if (candidate.id === 'candidateC') progressBarColor = 'bg-warning';
+
+
+                    resultsHtml += `
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                <h5 class="mb-0">${candidate.name}</h5>
+                                <span class="badge bg-secondary fs-6">${count} votos</span>
+                            </div>
+                            <div class="progress" style="height: 30px;">
+                                <div class="progress-bar ${progressBarColor} progress-bar-striped progress-bar-animated"
+                                     role="progressbar"
+                                     style="width: ${percentage}%"
+                                     aria-valuenow="${percentage}"
+                                     aria-valuemin="0"
+                                     aria-valuemax="100">
+                                     ${percentage}%
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+
+            resultsHtml += `<hr class="my-4">`;
+            resultsHtml += `<h4 class="text-center">Total de Votos Emitidos: <span class="badge bg-dark fs-5">${totalVotes}</span></h4>`;
+
             resultsDisplay.innerHTML = resultsHtml;
         }
     }
