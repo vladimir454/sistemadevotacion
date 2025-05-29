@@ -26,13 +26,13 @@ document.addEventListener('DOMContentLoaded', () => {
         { id: 'candidateA', name: 'Mario' },
         { id: 'candidateB', name: 'Jose' },
         { id: 'candidateC', name: 'Vladimir' },
-         { id: 'candidateD', name: 'h' },
-          { id: 'candidateE', name: 'y' },
-           { id: 'candidateF', name: 'h' },
-            { id: 'candidateG', name: 'n' },
-             { id: 'candidateH', name: 'Jaime' },
-              { id: 'candidateI', name: 'Redy' },
-               { id: 'candidateJ', name: 'Erick' }
+        { id: 'candidateD', name: 'Gr' },
+        { id: 'candidateE', name: 'Gisel' },
+        { id: 'candidateF', name: 'Maria' },
+        { id: 'candidateG', name: 'Steve' },
+        { id: 'candidateH', name: 'Jaime' },
+        { id: 'candidateI', name: 'Redy' },
+        { id: 'candidateJ', name: 'Erick' }
     ]);
 
     // Initialize vote counts for new candidates
@@ -116,7 +116,15 @@ document.addEventListener('DOMContentLoaded', () => {
                     alert('Ya existe una cuenta con este CI.');
                     return;
                 }
+// Expresión regular para validar contraseñas
+            const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
+          
+                // // Validar contraseña
+                // if (!passwordRegex.test(regPassword.value)) {
+                //     contraseñaError.textContent = 'La contraseña debe tener al menos 8 caracteres, incluyendo una mayúscula, una minúscula, un número y un carácter especial.';
+                //     return;
+                // }
                 const newUser = {
                     ci: regCi,
                     name: regName,
